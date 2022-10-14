@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 void validacionArgsOPT(int iFlag, int oFlag, int dFlag, int pFlag, int nFlag, char* argv[])
 {
@@ -70,7 +72,24 @@ int main(int argc, char* argv[])
         }
     }
     validacionArgsOPT(iFlag, oFlag, dFlag, pFlag, nFlag, argv);
-    //printf("Los parametros ingresados son:\niFlag: %s\noFlag: %s\ndFlag: %s\npFlag: %s\nnFlag: %s\nbFlag: %d\n", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, bFlag);
+    printf("Los parametros ingresados son:\niFlag: %s\noFlag: %s\ndFlag: %s\npFlag: %s\nnFlag: %s\nbFlag: %d\n", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, bFlag);
+    
+    /************************************ Lógica de solución - punto 2 y 3 ************************************/
+    pid_t pidP;
+    pidP = fork();
+    int status;
+
+    if (pidP > 0 || pidP == 0)
+    {
+        wait(&status);
+        execl("./broker", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, NULL);
+    }
+    else
+    {
+        printf("Err\n");
+        exit(1);
+    }
+    
     
 
 }
