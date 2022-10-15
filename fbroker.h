@@ -2,5 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#define largoChar 300
 
-void crearWorkers(int nroWorkers);
+int randomizerWorker(char* nombreArchivoEntrada);

@@ -1,6 +1,20 @@
 #include "fbroker.h"
 
-void crearWorkers(int nroWorkers)
+int randomizerWorker(char* nombreArchivoEntrada)
 {
-    execl("./worker", "./worker", NULL);
+    FILE* dctoEntrada = fopen(nombreArchivoEntrada, "r");
+    if (dctoEntrada == NULL)
+    {
+        printf("%s: error in input file named\n", nombreArchivoEntrada);
+        exit(-1);
+    }
+    while (fgets(linea, largoChar, dctoEntrada))
+    {
+        
+    }
+    
+    
+    return 1;
+
+
 }
