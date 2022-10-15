@@ -10,5 +10,5 @@ Favor de ignorar el contenido:
 # Considerar un archivo ejecutable de broker.c, para ello se debe realizar:
 g++ broker.c fbroker.c -o broker
 
-# Ahora es posible realizar el punto de lógica 2.
-
+# Igualmente para worker.c
+g++ worker.c fworker.c -o worker

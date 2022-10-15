@@ -1,6 +1,6 @@
 #include "fbroker.h"
 
-void holaMundo()
+void crearWorkers(int nroWorkers)
 {
-    printf("Hola Mundo\n");
+    execl("./worker", "./worker", NULL);
 }

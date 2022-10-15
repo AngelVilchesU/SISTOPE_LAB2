@@ -79,10 +79,15 @@ int main(int argc, char* argv[])
     pidP = fork();
     int status;
 
-    if (pidP > 0 || pidP == 0)
+    if (pidP > 0)
+    {
+        wait(&status);
+    }
+    else if (pidP == 0)
     {
         wait(&status);
         execl("./broker", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, NULL);
+    
     }
     else
     {
