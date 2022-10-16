@@ -5,10 +5,6 @@ int main(int argc, char *argv[])
     printf("--------------\n");
     printf("Los parametros ingresados son:\niFlag: %s\noFlag: %s\ndFlag: %s\npFlag: %s\nnFlag: %s\n", argv[0], argv[1], argv[2], argv[3], argv[4]);
     printf("--------------\n");
-    int arrPidsHijo[atoi(argv[4])];
-    inicializarArrEstatico(arrPidsHijo, atoi(argv[4]));
-    int worker = 0;
-    char linea[largoChar];
     pid_t pidP;
     int status;
     int fd1[2]; // Primer pipe (0 refiere a lectura y 1 a escritura)
@@ -16,74 +12,59 @@ int main(int argc, char *argv[])
     pipe(fd1);
     pipe(fd2);
 
-    
+    TDAlista* listaEnlazada = crearListaVacia();
+    leerYasignarWorker(argv[0], atoi(argv[4]), listaEnlazada);
 
-    for (int i = 0; i < (atoi(argv[4]) + 1); i++)
+    for (int i = 0; i < atoi(argv[4]); i++)
     {
-        if (i < (atoi(argv[4])))
-        {
-            pidP = fork();
-        }
+        pidP = fork();
         if (pidP > 0) // Es padre
         {
             wait(&status);
 
-            if (i < atoi(argv[4]))
+            while (existeNroWorker(listaEnlazada, i))
             {
-                if (!estaPid(arrPidsHijo, atoi(argv[4]), (getpid() + i + 1)))
-                {
-                    agregarPid(arrPidsHijo, atoi(argv[4]), (getpid() + i + 1));
-                }
+                printf("ASINAR VIA PIPE INFO AL WORKER %d\n", i);
+                printf("Su posicione en la LE es: %d\n", posicionNodo(listaEnlazada, i));
+                //printf("Linea: %s\n", obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i)));
+                close(fd1[0]); // Se cierra el canal de lectura del primer pipe
+                write(fd1[1], obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i)), strlen(obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i))) + 1);
+                close(fd1[1]);
+
+                wait(NULL);
+                char lineaH[largoChar];
+                close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
+                read(fd2[0], lineaH, 300);
+                printf("Linea por parte de PADRE: %s\n", lineaH);
+                close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
+
+                eliminar_nodo_pos(listaEnlazada, posicionNodo(listaEnlazada, i));
             }
-            else if (i == atoi(argv[4]))
-            {
-                FILE *dctoEntrada = fopen(argv[0], "r");
-                if (dctoEntrada == NULL)
-                {
-                    printf("%s: error in input file named\n", argv[0]);
-                    exit(-1);
-                }
-                srand(time(NULL));
-                while (fgets(linea, largoChar, dctoEntrada))
-                {
-                    worker = randomizer(atoi(argv[4]));
-                    printf("NUMERO RANDOM: %d\n", worker);
+            
 
-                    
-                    //////////////////
-                    // Pasar linea al hijo
-                    /////////////////
-                }
-
-                fclose(dctoEntrada);
-            }
-
-            close(fd1[0]); // Se cierra el canal de lectura del primer pipe
-            close(fd1[1]); // Se cierra el canal de escritura del primer pipe
-            close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
-            close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
+          
         }
-        else if (pidP == 0)
+        else
         {
             wait(&status);
 
-            printf("GETPID DEL HIJO: %d\n", getpid());            // Indica el hijo
-            printf("GETPPIND (PADRE) DEL HIJO: %d\n", getppid()); // Indica el padre
-
+            
             close(fd1[1]); // Se cierra el canal de escritura del primer pipe
+            char lineaH[largoChar];
+            read(fd1[0], lineaH, 300);
+            printf("Linea por parte de HIJO: %s\n", lineaH);
             close(fd1[0]); // Se cierra el canal de lectura del primer pipe
             close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
+
+            write(fd2[1], lineaH, strlen(lineaH) + 1);
             close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
+            
+
             execl("./worker", "./worker", NULL);
 
             exit(0);
         }
     }
-
-    for (int i = 0; i < atoi(argv[4]); i++)
-    {
-        printf("%d -", arrPidsHijo[i]);
-    }
-    printf("\n");
+    liberarLista(listaEnlazada);
     return 0;
 }
