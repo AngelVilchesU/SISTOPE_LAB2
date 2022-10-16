@@ -1,20 +1,40 @@
 #include "fbroker.h"
 
-int randomizerWorker(char* nombreArchivoEntrada)
+
+
+int randomizer(int nroWorkers)
 {
-    FILE* dctoEntrada = fopen(nombreArchivoEntrada, "r");
-    if (dctoEntrada == NULL)
-    {
-        printf("%s: error in input file named\n", nombreArchivoEntrada);
-        exit(-1);
-    }
-    while (fgets(linea, largoChar, dctoEntrada))
-    {
-        
-    }
-    
-    
-    return 1;
+    return (rand()%nroWorkers);
+}
 
+int estaPid(int* arrPids, int largoArr, int pidBuscado)
+{
+    for (int i = 0; i < largoArr; i++)
+    {
+        if (pidBuscado == arrPids[i])
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
 
+void agregarPid(int* arrPids, int largoArr, int pidNuevo)
+{
+    for (int i = 0; i < largoArr; i++)
+    {
+        if (arrPids[i] == 0)
+        {
+            arrPids[i] = pidNuevo;
+            break;
+        }
+    }
+}
+
+void inicializarArrEstatico(int* arrPids, int largoArr)
+{
+    for (int i = 0; i < largoArr; i++)
+    {
+        arrPids[i] = 0;
+    }
 }
