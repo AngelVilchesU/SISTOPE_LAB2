@@ -1,4 +1,5 @@
 #include "fbroker.h"
+#define llamado 0
 
 int main(int argc, char *argv[])
 {
@@ -12,59 +13,95 @@ int main(int argc, char *argv[])
     pipe(fd1);
     pipe(fd2);
 
-    TDAlista* listaEnlazada = crearListaVacia();
-    leerYasignarWorker(argv[0], atoi(argv[4]), listaEnlazada);
-
     for (int i = 0; i < atoi(argv[4]); i++)
     {
         pidP = fork();
         if (pidP > 0) // Es padre
+            continue;
+        else if (pidP == 0)
         {
-            wait(&status);
-
-            while (existeNroWorker(listaEnlazada, i))
-            {
-                printf("ASINAR VIA PIPE INFO AL WORKER %d\n", i);
-                printf("Su posicione en la LE es: %d\n", posicionNodo(listaEnlazada, i));
-                //printf("Linea: %s\n", obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i)));
-                close(fd1[0]); // Se cierra el canal de lectura del primer pipe
-                write(fd1[1], obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i)), strlen(obtenerLineaPos(listaEnlazada, posicionNodo(listaEnlazada, i))) + 1);
-                close(fd1[1]);
-
-                wait(NULL);
-                char lineaH[largoChar];
-                close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
-                read(fd2[0], lineaH, 300);
-                printf("Linea por parte de PADRE: %s\n", lineaH);
-                close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
-
-                eliminar_nodo_pos(listaEnlazada, posicionNodo(listaEnlazada, i));
-            }
-            
-
-          
+            break;
         }
         else
         {
-            wait(&status);
-
-            
-            close(fd1[1]); // Se cierra el canal de escritura del primer pipe
-            char lineaH[largoChar];
-            read(fd1[0], lineaH, 300);
-            printf("Linea por parte de HIJO: %s\n", lineaH);
-            close(fd1[0]); // Se cierra el canal de lectura del primer pipe
-            close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
-
-            write(fd2[1], lineaH, strlen(lineaH) + 1);
-            close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
-            
-
-            execl("./worker", "./worker", NULL);
-
-            exit(0);
+            exit(-1);
         }
     }
-    liberarLista(listaEnlazada);
+
+    if (pidP > 0) // Es padre
+    {
+        printf("SOY EL PADRE DE PID %d\n", getpid());
+
+        int worker = 0;
+        char linea[largoChar];
+        char ordenFin[4] = "FIN";
+        FILE *dctoEntrada = fopen(argv[0], "r");
+        if (dctoEntrada == NULL)
+        {
+            printf("%s: error in input file named\n", argv[0]);
+            exit(-1);
+        }
+        srand(time(NULL));
+
+
+
+        close(fd1[0]); // Se cierra el canal de lectura del primer pipe
+        while (fgets(linea, largoChar, dctoEntrada))
+        {
+            worker = randomizer(atoi(argv[4]));
+
+            printf("ASINAR VIA PIPE INFO AL WORKER %d\n", worker);
+            printf("Linea enviada al hijo: %s\n", linea);
+
+            
+            write(fd1[1], linea, strlen(linea) + 1);
+            
+
+            char lineaH[largoChar];
+            read(fd2[0], lineaH, 300);
+            printf("Linea recibida por el PADRE: %s\n", lineaH);
+        }
+        
+
+        write(fd1[1], ordenFin, strlen(ordenFin) + 1);
+        close(fd1[1]);
+        close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
+        close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
+
+        fclose(dctoEntrada);
+    }
+    else if (pidP == 0)
+    {
+        printf("SOY EL HIJO DE PID %d\n", getpid());
+        close(fd1[1]); // Se cierra el canal de escritura del primer pipe
+        while (1)
+        {
+            
+            
+            char lineaH[largoChar];
+            char lineaHAux[largoChar];
+            read(fd1[0], lineaH, 300);
+            
+            if (strcmp(lineaH, "FIN") == 0)
+            {
+                printf("HE RECIBIDO LA ORDEN DE FIN: %s\n", lineaH);
+                break;
+            }
+            else if ((strcmp(lineaH, "") > 0) && (strcmp(lineaH, lineaHAux) != 0)) // LineaH no es vacio
+            {   
+                strcpy(lineaHAux, lineaH);
+                strcat(lineaH, "---------------------------------------------->Modificacion por el hijo\n");
+                printf("Linea modificada por el hijo: %s\n", lineaH);
+                write(fd2[1], lineaH, strlen(lineaH) + 1);
+            }
+            
+        }
+        close(fd1[0]); // Se cierra el canal de lectura del primer pipe
+        close(fd2[0]); // Se cierra el canal de lectura del segundo pipe
+        close(fd2[1]); // Se cierra el canal de escritura del segundo pipe
+        // execl("./worker", "./worker", NULL);
+        exit(0);
+    }
+
     return 0;
 }
