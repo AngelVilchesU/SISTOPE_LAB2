@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
         char buff[600];
         char bff[5000];
         char lineaFinal[400];
-        char linea[300];
         char numero[50];
         ///////////
         while (fgets(linea, 300, dctoEntrada) != NULL)
