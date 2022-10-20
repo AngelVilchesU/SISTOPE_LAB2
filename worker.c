@@ -1,78 +1,37 @@
 #include "fworker.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-int main(int argc, char *argv[])
+int main()
 {
-    //printf("*****************************************\n");
-    //printf("Los parametros ingresados son:\nBuffer: %s\n", argv[0]);
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // SOLO COMPILAR WORKER Y TEST PARA PROBAR
-
-    /*
     char bff[300];
     char gigante[5000];
-    char gigante2[5000] = "leyo la flag final";
-    int number;
+    int number = 0;
+    int contador = 0;
 
-    //no pescar este caso por el momento
-    /*
+    // no pescar este caso por el momento
+
     while (1)
     {
-        read(STDIN_FILENO,  &bff, sizeof(char) *300);
-        read(STDIN_FILENO, &number, sizeof(number));
-        if (number == 0)
+        read(STDIN_FILENO, &bff, sizeof(char) * 300);
+        // read(STDIN_FILENO, &number, sizeof(int));
+        if (strcmp(bff, "FIN") == 0)
         {
-            //en este write ira todo lo procesado
-            write(STDOUT_FILENO, &gigante2, sizeof(char)*5000);
+
+            // en este write ira todo lo procesado
+            write(STDOUT_FILENO, &gigante, sizeof(char) * 5000);
             return 0;
         }
-        else{
-            sprintf(gigante,"Linea: %s\n", bff);
+        else
+        {
+            sprintf(gigante, "Linea: %s\n", bff);
+            contador++;
         }
-
     }
-    */
 
-    /*
-     //caso para el cual al menos se envio una linea al worker
-     //trabjar con este caso por mientras
-     while (1)
-     {
-         read(STDIN_FILENO,  &bff, sizeof(char) *300);
-         read(STDIN_FILENO, &number, sizeof(number));
-         if (number == 0)
-         {
-             //en este write ira todo lo procesado
-             write(STDOUT_FILENO, &gigante, sizeof(char)*5000);
-             return 0;
-         }
-         else{
-             sprintf(gigante,"Linea: %s\n", bff);
-         }
-
-     }
-     */
-
-    
     return 0;
 }

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
             //sprintf(lineaFinal, "Linea: %s ", linea);
             //printf("A: %s", lineaFinal);
             /////////
-            write(lecturaPipe[contador][WRITE], &linea, sizeof(char) * largoChar);
+            write(lecturaPipe[random][WRITE], &linea, sizeof(char) * largoChar);
         }
 
         for (int i = 0; i < atoi(argv[4]); i++)

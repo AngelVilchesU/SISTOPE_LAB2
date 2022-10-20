@@ -9,7 +9,7 @@
 
 int main(int argc, char const *argv[])
 {
-    int nroWorker = 4, IDChild = 0;
+    int nroWorker = 6, IDChild = 0;
     char *nombreArchivo = "datos_juegos.csv";
     pid_t pid;
 
@@ -54,9 +54,12 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        char buff[500];
+        char buff[600];
         char bff[5000];
+        char lineaFinal[400];
         char linea[300];
+        char final[300] = "FIN";
+        char numero[50];
         int random = 0;
         FILE *archivo = fopen("datos_juegos.csv", "r");
 
@@ -66,27 +69,28 @@ int main(int argc, char const *argv[])
         }
 
         srand(time(NULL));
-        int contador = 0;
         int flagFinal = 0;
         while (fgets(linea, 300, archivo) != NULL)
         {
             random = rand() % nroWorker;
             printf("numero random: %d\n", random);
-            // sprintf(buff, "Linea: %s Hijo: %d\n", linea, random);
-            write(lecturaPipe[contador][WRITE], &linea, sizeof(char) * 300);
-            contador = contador + 1;
-            // printf("COntador: %d\n", contador);
+            sprintf(numero, " Numero: %d\n", random);
+            strcpy(lineaFinal,linea);
+            strcat(lineaFinal, numero);
+            //sprintf(lineaFinal, "Linea: %s ", linea);
+            //printf("A: %s", lineaFinal);
+            write(lecturaPipe[random][WRITE], &lineaFinal, sizeof(char)*300);
         }
 
-        //FLAG FINAL
-        for (int i = 0; i < nroWorker; i++)
+
+        for (int i = 0; i < nroWorker; i++) //flag final
         {
-            write(lecturaPipe[i][WRITE], &flagFinal, sizeof(flagFinal));
+            write(lecturaPipe[i][WRITE], &final, sizeof(char)*300);
         }
 
         //para que el printf del read no se quede pegado, al menos un worker tuvo que haber trabajado alguna linea
         //eso significa que hasta que el random funcione, la cantidad de workers, debe ser la misma que la cantidad de lineas del csv file
-        //ESTO ES SOLO PARA DEMOSTRAR QUE LOS WORKER RECIBEN BIEN LO ENVIADO Y ENVIAN CORRECTAMENTE
+        
         for (int i = 0; i < nroWorker; i++)
         {
             read(escrituraPipe[i][READ], &bff, sizeof(char) * 5000);
