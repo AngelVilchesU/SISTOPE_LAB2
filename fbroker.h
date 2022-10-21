@@ -19,7 +19,7 @@ typedef struct nodoGenerico
     char nombreJuegoMasCaro[largoChar];
     char nombreJuegoMasBarato[largoChar];
     int contadorJuegos;
-    int sumaTotalJuegos;
+    float sumaTotalJuegos;
     float promedioPrecioJuegos;
     int contadorW;
     int contadorMC;
@@ -38,25 +38,4 @@ typedef struct listaGenerica
 
 TDAlista *crearListaVacia();
 
-int esListaVacia(TDAlista *);
-
-//void recorrerLista(TDAlista *);
-
-void insertarInicio(TDAlista *, int , int , 
-                    int , char* ,
-                    char* , int , 
-                    int , float , 
-                    int , int , int , 
-                    float , float , float );
-
-void eliminarInicio(TDAlista *);
-
 void liberarLista(TDAlista* );
-
-
-
-
-
-
-
-

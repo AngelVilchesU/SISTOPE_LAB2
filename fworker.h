@@ -13,7 +13,7 @@ typedef struct nodoGenerico
     char nombreJuegoMasCaro[largoChar];
     char nombreJuegoMasBarato[largoChar];
     int contadorJuegos;
-    int sumaTotalJuegos;
+    float sumaTotalJuegos;
     float promedioPrecioJuegos;
     int contadorW;
     int contadorMC;
@@ -36,13 +36,24 @@ int esListaVacia(TDAlista *);
 
 //void recorrerLista(TDAlista *);
 
-void insertarInicio(TDAlista *, int , int , 
-                    int , char* ,
+void insertarInicio(TDAlista *, int , float , 
+                    float , char* ,
                     char* , int , 
-                    int , float , 
+                    float , float , 
                     int , int , int , 
-                    float , float , float );
+                    float , float , float ,
+                    char* );
 
 void eliminarInicio(TDAlista *);
 
 void liberarLista(TDAlista* );
+
+int aniosEquivalentes(TDAlista* , int);
+
+void actualizarNodo(TDAlista *, int , float , 
+                    float , char* ,
+                    char* , int , 
+                    float , float , 
+                    int , int , int , 
+                    float , float , float ,
+                    char* );

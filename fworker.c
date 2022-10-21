@@ -23,7 +23,21 @@ void recorrerLista(TDAlista *lista)
         nodo *auxiliar = lista->inicio;
         while (auxiliar != NULL)
         {
-            printf("%d ", auxiliar->dato);
+            printf("%d ", auxiliar->anio);
+            printf("%f ", auxiliar->precioMasCaro);
+            printf("%f ", auxiliar->precioMasBarato);
+            printf("%s ", auxiliar->nombreJuegoMasCaro);
+            printf("%s ", auxiliar->nombreJuegoMasBarato);
+            printf("%d ", auxiliar->contadorJuegos);
+            printf("%f ", auxiliar->sumaTotalJuegos);
+            printf("%f ", auxiliar->promedioPrecioJuegos);
+            printf("%d ", auxiliar->contadorW);
+            printf("%d ", auxiliar->contadorMC);
+            printf("%d ", auxiliar->contadorL);
+            printf("%f ", auxiliar->porcentajeW);
+            printf("%f ", auxiliar->porcentajeMC);
+            printf("%f ", auxiliar->porcentajeL);
+            printf("%s ", auxiliar->juegosGratis);
             auxiliar = auxiliar->siguiente;
         }
         printf("\n");
@@ -32,10 +46,10 @@ void recorrerLista(TDAlista *lista)
         printf("La lista está vacía\n");
 }
 */
-void insertarInicio(TDAlista *lista, int anio, int precioMasCaro, 
-                    int precioMasBarato, char* nombreJuegoMasCaro,
+void insertarInicio(TDAlista *lista, int anio, float precioMasCaro, 
+                    float precioMasBarato, char* nombreJuegoMasCaro,
                     char* nombreJuegoMasBarato, int contadorJuegos, 
-                    int sumaTotalJuegos, float promedioPrecioJuegos, 
+                    float sumaTotalJuegos, float promedioPrecioJuegos, 
                     int contadorW, int contadorMC, int contadorL, 
                     float porcentajeW, float porcentajeMC, float porcentajeL,
                     char* juegosGratis)
@@ -75,3 +89,48 @@ void liberarLista(TDAlista* lista)
 {
     free(lista);
 }
+
+int aniosEquivalentes(TDAlista *lista, int anio)
+{
+    if (!esListaVacia(lista))
+    {
+        nodo *auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (auxiliar->anio == anio)
+            {
+                return 1;
+            }
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}
+
+/*
+void actualizarNodo(TDAlista *lista, int anio, float precioMasCaro, 
+                    float precioMasBarato, char* nombreJuegoMasCaro,
+                    char* nombreJuegoMasBarato, int contadorJuegos, 
+                    float sumaTotalJuegos, float promedioPrecioJuegos, 
+                    int contadorW, int contadorMC, int contadorL, 
+                    float porcentajeW, float porcentajeMC, float porcentajeL,
+                    char* juegosGratis)
+{
+    if (!esListaVacia(lista))
+    {
+        while (lista != NULL)
+        {
+            if (lista->anio == anio)
+            {
+                return 1;
+            }
+            auxiliar = auxiliar->siguiente;
+        }
+        
+    }
+    else
+        printf("La lista está vacía\n");
+}
+*/

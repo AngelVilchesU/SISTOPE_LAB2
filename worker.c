@@ -22,6 +22,7 @@ int main()
     int posicionAnio = 5;
     int posicionPrecio = 3;
     int posicionNombreJuego = 1;
+    float sumaTotalJuegos = 0;
     
 
 
@@ -45,6 +46,7 @@ int main()
             //strcat(gigante, buffer);
             contador++;
 
+
             ///////////////////////////////////////////////
             //980880,Twinfold,0,60.0,False,2018,False,Yes,No,No
             int posicionAct = 0;
@@ -53,10 +55,13 @@ int main()
             char nombreJuego[largoChar];
             float precioJuego;
             int anio;
-            char esGratis[largoChar];
-            char esWindows[largoChar];
-            char esMac[largoChar];
-            char esLinux[largoChar];
+            char esGratis[largoChar] = "";
+            int esWindows = 0;
+            int esMac = 0;
+            int esLinux = 0;
+            float promWindows = 0;
+            float promMac = 0;
+            float promLinux = 0;
 
             while (token != NULL)
             {
@@ -67,6 +72,7 @@ int main()
                 else if (posicionAct == posicionPrecio) // Aquí token = precio
                 {
                     precioJuego = atof(token);
+                    sumaTotalJuegos = sumaTotalJuegos + precioJuego;
                 }
                 else if (posicionAct == posicionAnio) // Aquí token = año
                 {
@@ -74,27 +80,89 @@ int main()
                 }
                 else if (posicionAct == posicionEsGratis) // Aquí token = si el juego es gratis
                 {
-                    strcat(esGratis, token);
+                    if (strcmp(token, "Yes"))
+                    {
+                        strcat(esGratis, token);
+                    }
                 }
                 else if (posicionAct == posicionEsW) // Aquí token = si el juego está disponible en Windows
                 {
-                    strcat(esWindows, token);
+                    if (strcmp(token, "Yes"))
+                    {
+                        esWindows = 1;
+                        promWindows++;
+                    }                    
                 }
                 else if (posicionAct == posicionEsMC) // Aquí token = si el juego está disponible en Mac
                 {
-                    strcat(esMac, token);
+                    if (strcmp(token, "Yes"))
+                    {
+                        esMac = 1;
+                        promMac++;
+                    }
                 }
                 else if (posicionAct == posicionEsL) // Aquí token = si el juego está disponible en Linux
                 {
-                    strcat(esLinux, token);
+                    if (strcmp(token, "Yes"))
+                    {
+                        esLinux = 1;
+                        promLinux++;
+                    }
                 }
                 token = strtok(NULL, ",");
                 posicionAct++;
             }
             // Si es lista vacia, lo agrega
+            if (esListaVacia(LE))
+            {
+                insertarInicio(LE, anio, precioJuego,
+                               precioJuego, nombreJuego,
+                               nombreJuego, contador,
+                               sumaTotalJuegos, precioJuego,
+                               esWindows, esMac, esLinux,
+                               promWindows, promMac, promLinux,
+                               esGratis);
+            }
             // Si no, busca si los años coinciden
+            else
+            {
                 // Si coiciden, compara y proceso (deja uno solo)
+                if (aniosEquivalentes(LE, anio))
+                {
+                    // La información se actualiza en el nodo ya existente en la LE de acuerdo a los parámetros obtenidos
+                    // Puntos a considerar
+                    // Referente al año, ninguno
+                    // Referente al precio más caro, comparar entre la info. obtenida y el nodo del mismo año (extraer el mayor)
+                    // Referente al precio más barato, comparar entre la info. obtenida y el nodo del mismo año (extraer el menor)
+                    // Referente al nombre del juego más caro, obtenerlo en la línea de código del precio más caro
+                    // Referente al nombre del juego más barato, obtenerlo en la línea de código del precio más barato
+                    // Referente al contador de juegos, se le suma 1 al nodo con juegos del mismo año (esta condición if)
+                    // Referente a la suma total de juegos, sumar precio del juego existente en el nodo y el obtenido
+                    // Referente al promedio, calcularlo con el promedio existente y el precio obtenido
+                    // Referente al contador de juegos Windows, sumarlo en caso de que corresponda, lo mismo con MC y L
+                    // Referente al porcentaje de juegos Windows, calcular el promedio considerando que...
+                    // ...si existe se calcula el promedio con el dato de nodo y un 100% del obtenido, caso contrario...
+                    // ...se calcula el promedio con el dato de nodo y un 0% del obtenido, los mismo con MC y L
+                    // Referente a los juegos gratis, contatenar nombre del juego obtenido si es gratis con la línea ya...
+                    // ...existente en el nodo
+                    //actualizarNodo
+                }
                 // Si no, agregalo
+                else
+                {
+                    insertarInicio(LE, anio, precioJuego,
+                               precioJuego, nombreJuego,
+                               nombreJuego, contador,
+                               sumaTotalJuegos, precioJuego,
+                               esWindows, esMac, esLinux,
+                               promWindows, promMac, promLinux,
+                               esGratis);
+                }
+            }
+            
+            
+                
+                
             
 
 
