@@ -90,7 +90,7 @@ int main()
                     if (strcmp(token, "Yes"))
                     {
                         esWindows = 1;
-                        promWindows++;
+                        promWindows = 100.0;
                     }                    
                 }
                 else if (posicionAct == posicionEsMC) // Aquí token = si el juego está disponible en Mac
@@ -98,7 +98,7 @@ int main()
                     if (strcmp(token, "Yes"))
                     {
                         esMac = 1;
-                        promMac++;
+                        promMac = 100.0;
                     }
                 }
                 else if (posicionAct == posicionEsL) // Aquí token = si el juego está disponible en Linux
@@ -106,7 +106,7 @@ int main()
                     if (strcmp(token, "Yes"))
                     {
                         esLinux = 1;
-                        promLinux++;
+                        promLinux = 100.0;
                     }
                 }
                 token = strtok(NULL, ",");
@@ -146,6 +146,13 @@ int main()
                     // Referente a los juegos gratis, contatenar nombre del juego obtenido si es gratis con la línea ya...
                     // ...existente en el nodo
                     //actualizarNodo
+                    LE = actualizarNodo(LE, anio, precioJuego,
+                               precioJuego, nombreJuego,
+                               nombreJuego, contador,
+                               sumaTotalJuegos, precioJuego,
+                               esWindows, esMac, esLinux,
+                               promWindows, promMac, promLinux,
+                               esGratis);
                 }
                 // Si no, agregalo
                 else

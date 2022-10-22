@@ -50,10 +50,10 @@ void liberarLista(TDAlista* );
 
 int aniosEquivalentes(TDAlista* , int);
 
-void actualizarNodo(TDAlista *, int , float , 
-                    float , char* ,
-                    char* , int , 
-                    float , float , 
-                    int , int , int , 
-                    float , float , float ,
-                    char* );
+TDAlista *actualizarNodo(TDAlista *, int , float ,
+                         float , char *,
+                         char *, int ,
+                         float , float ,
+                         int , int , int ,
+                         float , float , float ,
+                         char *);
