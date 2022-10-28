@@ -7,6 +7,7 @@
 #define WRITE 1
 #define READ 0
 #define largoChar 300
+#define largoCharMax 9999
 
 int randomizer(int);
 
@@ -39,3 +40,15 @@ typedef struct listaGenerica
 TDAlista *crearListaVacia();
 
 void liberarLista(TDAlista* );
+
+void recorrerLista(TDAlista *);
+
+int esListaVacia(TDAlista *);
+
+
+
+
+
+
+
+//TDAlista *copyList(TDAlista *);

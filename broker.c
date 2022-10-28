@@ -71,10 +71,10 @@ int main(int argc, char *argv[])
             printf("numero random: %d\n", random);
             ///////
             sprintf(numero, " Numero: %d\n", random);
-            strcpy(lineaFinal,linea);
+            strcpy(lineaFinal, linea);
             strcat(lineaFinal, numero);
-            //sprintf(lineaFinal, "Linea: %s ", linea);
-            //printf("A: %s", lineaFinal);
+            // sprintf(lineaFinal, "Linea: %s ", linea);
+            // printf("A: %s", lineaFinal);
             /////////
             write(lecturaPipe[random][WRITE], &linea, sizeof(char) * largoChar);
         }
@@ -83,12 +83,21 @@ int main(int argc, char *argv[])
         {
             write(lecturaPipe[i][WRITE], &ordenFin, sizeof(char) * 4);
         }
+
+        ////////////////////////////////////////////////////////////////////////////
+        
         for (int i = 0; i < atoi(argv[4]); i++)
         {
-            read(escrituraPipe[i][READ], &lineaRespuesta, sizeof(char) * largoChar);
+            TDAlista *LE = crearListaVacia();
+            read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * 5000);
+            printf("REspuesta del worker: Es lista vacia --> %d (1 para si y 0 para no)\n", esListaVacia(LE));
 
-            printf("REspuesta del worker: %s\n", lineaRespuesta);
+            //copyList(LE);
+            recorrerLista(LE);
+            liberarLista(LE);
         }
+        
     }
+
     return 0;
 }

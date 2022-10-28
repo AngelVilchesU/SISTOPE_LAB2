@@ -37,7 +37,7 @@ int main()
         {
 
             // en este write ira todo lo procesado
-            write(STDOUT_FILENO, &gigante, sizeof(char) * 5000);
+            write(STDOUT_FILENO, LE, sizeof(TDAlista) * 5000);
             return 0;
         }
         else
