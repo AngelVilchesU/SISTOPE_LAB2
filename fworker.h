@@ -60,3 +60,31 @@ TDAlista *actualizarNodo(TDAlista *, int , float ,
                          char *);
 
 int anioPosicionLE(TDAlista * , int );
+
+float precioMasCaroPosicionLE(TDAlista * , int );
+
+float precioMasBaratoPosicionLE(TDAlista * , int );
+
+char* nombreJuegoMasCaroPosicionLE(TDAlista * , int );
+
+char* nombreJuegoMasBaratoPosicionLE(TDAlista * , int );
+
+int contadorJuegosPosicionLE(TDAlista * , int );
+
+float sumaTotalJuegosPosicionLE(TDAlista * , int );
+
+float promedioPrecioJuegosPosicionLE(TDAlista * , int );
+
+int contadorWPosicionLE(TDAlista * , int );
+
+int contadorMACPosicionLE(TDAlista * , int );
+
+int contadorLPosicionLE(TDAlista * , int );
+
+float porcentajeWPosicionLE(TDAlista * , int );
+
+float porcentajeMACPosicionLE(TDAlista * , int );
+
+float porcentajeLPosicionLE(TDAlista * , int);
+
+char* juegosGratisPosicionLE(TDAlista * , int );

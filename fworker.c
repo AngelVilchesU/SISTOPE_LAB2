@@ -248,3 +248,297 @@ int anioPosicionLE(TDAlista * lista, int nodoEsp)
     else
         return 0;
 }
+
+float precioMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->precioMasCaro;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+float precioMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->precioMasBarato;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+char* nombreJuegoMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->nombreJuegoMasCaro;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return NULL;
+    }
+    else
+        return NULL;
+}
+
+char* nombreJuegoMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->nombreJuegoMasBarato;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return NULL;
+    }
+    else
+        return NULL;
+}
+
+int contadorJuegosPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->contadorJuegos;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}
+
+float sumaTotalJuegosPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->sumaTotalJuegos;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+float promedioPrecioJuegosPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->promedioPrecioJuegos;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+int contadorWPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->contadorW;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}
+
+int contadorMACPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->contadorMC;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}
+
+int contadorLPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->contadorL;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}
+
+float porcentajeWPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->porcentajeW;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+float porcentajeMACPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->porcentajeMC;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+float porcentajeLPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->porcentajeL;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0.0;
+    }
+    else
+        return 0.0;
+}
+
+char* juegosGratisPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->juegosGratis;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return NULL;
+    }
+    else
+        return NULL;
+}
