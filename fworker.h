@@ -88,3 +88,5 @@ float porcentajeMACPosicionLE(TDAlista * , int );
 float porcentajeLPosicionLE(TDAlista * , int);
 
 char* juegosGratisPosicionLE(TDAlista * , int );
+
+int largoLE(TDAlista *);

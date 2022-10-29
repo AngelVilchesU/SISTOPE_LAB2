@@ -52,5 +52,31 @@ int esListaVacia(TDAlista *);
 
 
 
-struct nodoGenerico *copyList(struct nodoGenerico *);
+
+void insertarInicio(TDAlista *, int , float , 
+                    float , char* ,
+                    char* , int , 
+                    float , float , 
+                    int , int , int , 
+                    float , float , float ,
+                    char* );
+
+TDAlista *actualizarNodo(TDAlista *, int , float ,
+                         float , char *,
+                         char *, int ,
+                         float , float ,
+                         int , int , int ,
+                         float , float , float ,
+                         char *);
+
+int aniosEquivalentes(TDAlista* , int);
+
+char* strJuegoMasCaro(float , char* , float , char* );
+
+char* strJuegoMasBarato(float , char* , float , char* );
+
+float promedio(float , float );
+float valorMayor(float , float );
+
+float valorMenor(float , float );
 

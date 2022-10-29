@@ -170,10 +170,16 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                 // Referente al año, ninguno
 
                 // Referente al nombre del juego más caro, obtenerlo en la línea de código del precio más caro
-                strcpy(auxiliar->nombreJuegoMasCaro, strJuegoMasCaro(auxiliar->precioMasCaro, auxiliar->nombreJuegoMasCaro, precioMasCaro, nombreJuegoMasCaro));
-                
+                char auxStr[largoChar];
+                strcpy(auxStr, auxiliar->nombreJuegoMasCaro);
+                strcpy(auxiliar->nombreJuegoMasCaro, "");
+                strcpy(auxiliar->nombreJuegoMasCaro, strJuegoMasCaro(auxiliar->precioMasCaro, auxStr, precioMasCaro, nombreJuegoMasCaro));
+        
                 // Referente al nombre del juego más barato, obtenerlo en la línea de código del precio más barato
-                strcpy(auxiliar->nombreJuegoMasBarato, strJuegoMasBarato(auxiliar->precioMasBarato, auxiliar->nombreJuegoMasBarato, precioMasBarato, nombreJuegoMasBarato));
+                strcpy(auxStr, "");
+                strcpy(auxStr, auxiliar->nombreJuegoMasBarato);
+                strcpy(auxiliar->nombreJuegoMasBarato, "");
+                strcpy(auxiliar->nombreJuegoMasBarato, strJuegoMasBarato(auxiliar->precioMasBarato, auxStr, precioMasBarato, nombreJuegoMasBarato));
                 
                 // Referente al precio más caro, comparar entre la info. obtenida y el nodo del mismo año (extraer el mayor)
                 auxiliar->precioMasCaro = valorMayor(auxiliar->precioMasCaro, precioMasCaro);
@@ -213,6 +219,7 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
 
                 // Referente a los juegos gratis, contatenar nombre del juego obtenido si es gratis con la línea ya...
                 // ...existente en el nodo
+                strcat(juegosGratis, "\n");
                 strcat(auxiliar->juegosGratis, juegosGratis);
                 
                 // actualizarNodo
@@ -541,4 +548,21 @@ char* juegosGratisPosicionLE(TDAlista * lista, int nodoEsp)
     }
     else
         return NULL;
+}
+
+int largoLE(TDAlista *lista)
+{
+    if (!esListaVacia(lista))
+    {
+        nodo *auxiliar = lista->inicio;
+        int largo = 0;
+        while (auxiliar != NULL)
+        {
+            largo++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return largo;
+    }
+    else
+        return 0;
 }

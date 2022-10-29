@@ -34,7 +34,10 @@ int main()
         {
 
             // Cantidad de nodos procesados
-            write(STDOUT_FILENO, &contador, sizeof(int) * 1);
+            int largo = largoLE(LE);
+            write(STDOUT_FILENO, &largo, sizeof(int));  
+
+            write(STDOUT_FILENO, &contador, sizeof(int));
 
             if (contador != 0) // Si existen nodos por evaluar
             {
@@ -126,17 +129,15 @@ int main()
             return 0;
         }
         else
-        {
-            // sprintf(gigante, "Linea: %s\n", buffer);
-            // strcat(gigante, buffer);
-            contador++;
+        {   
+            int nroJuego = 1;
 
             ///////////////////////////////////////////////
             // 980880,Twinfold,0,60.0,False,2018,False,Yes,No,No
             int posicionAct = 0;
             char *token = strtok(buffer, ",");
             //////////////////////////
-            char nombreJuego[largoChar];
+            char nombreJuego[largoChar] = "";
             float precioJuego;
             int anio;
             char esGratis[largoChar] = "";
@@ -156,7 +157,7 @@ int main()
                 else if (posicionAct == posicionPrecio) // Aquí token = precio
                 {
                     precioJuego = atof(token);
-                    sumaTotalJuegos = sumaTotalJuegos + precioJuego;
+                    //sumaTotalJuegos = sumaTotalJuegos + precioJuego;
                 }
                 else if (posicionAct == posicionAnio) // Aquí token = año
                 {
@@ -166,7 +167,8 @@ int main()
                 {
                     if (strcmp(token, "Yes"))
                     {
-                        strcat(esGratis, token);
+                        strcat(esGratis, nombreJuego);
+                        strcat(esGratis, "\n");
                     }
                 }
                 else if (posicionAct == posicionEsW) // Aquí token = si el juego está disponible en Windows
@@ -201,8 +203,8 @@ int main()
             {
                 insertarInicio(LE, anio, precioJuego,
                                precioJuego, nombreJuego,
-                               nombreJuego, contador,
-                               sumaTotalJuegos, precioJuego,
+                               nombreJuego, nroJuego,
+                               precioJuego, precioJuego,
                                esWindows, esMac, esLinux,
                                promWindows, promMac, promLinux,
                                esGratis);
@@ -232,8 +234,8 @@ int main()
                     // actualizarNodo
                     LE = actualizarNodo(LE, anio, precioJuego,
                                         precioJuego, nombreJuego,
-                                        nombreJuego, contador,
-                                        sumaTotalJuegos, precioJuego,
+                                        nombreJuego, nroJuego,
+                                        precioJuego, precioJuego,
                                         esWindows, esMac, esLinux,
                                         promWindows, promMac, promLinux,
                                         esGratis);
@@ -243,13 +245,14 @@ int main()
                 {
                     insertarInicio(LE, anio, precioJuego,
                                    precioJuego, nombreJuego,
-                                   nombreJuego, contador,
-                                   sumaTotalJuegos, precioJuego,
+                                   nombreJuego, nroJuego,
+                                   precioJuego, precioJuego,
                                    esWindows, esMac, esLinux,
                                    promWindows, promMac, promLinux,
                                    esGratis);
                 }
             }
+            contador++;
         }
     }
 

@@ -86,18 +86,25 @@ int main(int argc, char *argv[])
 
         ////////////////////////////////////////////////////////////////////////////
 
+        TDAlista *lista = crearListaVacia();
+
         for (int i = 0; i < atoi(argv[4]); i++)
         {
 
             int cantNodo;
-            read(escrituraPipe[i][READ], &cantNodo, sizeof(int) * 1);
-            printf("Cantidad de nodos evaluados %d\n", cantNodo);
-            //char varible[largomax]
-            // 15 variables
+            int contadorJuegos;
+            read(escrituraPipe[i][READ], &cantNodo, sizeof(int));
 
+            read(escrituraPipe[i][READ], &contadorJuegos, sizeof(int));
+            printf("Cantidad de nodos evaluados %d\n", cantNodo);
+            printf("Cantidad de juegos/lineas evaluados %d\n", contadorJuegos);
+            printf("WORKER NRO: %d\n", i);
+            // char varible[largomax]
+            //  15 variables
 
             if (cantNodo != 0) // Si existen nodos por evaluar
             {
+                //printf("-------------------------------------------------------------\n");
                 for (int j = 0; j < cantNodo; j++) // Por cada nodo en la lista enlazada
                 {
                     //////////// Varibles locales ///////////
@@ -122,94 +129,126 @@ int main(int argc, char *argv[])
                         if (k == 0) // Refiere al año
                         {
                             read(escrituraPipe[i][READ], &anio, sizeof(int));
-                            printf("ANIO %d\n", anio);
+                            //printf("ANIO %d\n", anio);
                         }
                         else if (k == 1)
                         {
                             read(escrituraPipe[i][READ], &precioMasCaro, sizeof(float));
-                            printf("precio mas caro %f\n", precioMasCaro);
+                            //printf("precio mas caro %f\n", precioMasCaro);
                         }
                         else if (k == 2)
                         {
                             read(escrituraPipe[i][READ], &precioMasBarato, sizeof(float));
-                            printf("precio mas barato %f\n", precioMasBarato);
+                            //printf("precio mas barato %f\n", precioMasBarato);
                         }
                         else if (k == 3)
                         {
                             read(escrituraPipe[i][READ], &nombreJuegoMasCaro, sizeof(char) * largoChar);
-                            printf("nombre juego mas caro %s\n", nombreJuegoMasCaro);
+                            //("nombre juego mas caro %s\n", nombreJuegoMasCaro);
                         }
                         else if (k == 4)
                         {
                             read(escrituraPipe[i][READ], &nombreJuegoMasBarato, sizeof(char) * largoChar);
-                            printf("nombre juego mas barato %s\n", nombreJuegoMasBarato);
+                            //printf("nombre juego mas barato %s\n", nombreJuegoMasBarato);
                         }
-                        else if (k == 5) // ARREGLAR *****************************************************************
+                        else if (k == 5)
                         {
                             read(escrituraPipe[i][READ], &contadorJuegos, sizeof(int));
-                            printf("contador juegos %d\n", contadorJuegos);
+                            //printf("contador juegos %d\n", contadorJuegos);
                         }
-                        else if (k == 6) // ARREGLAR *****************************************************************
+                        else if (k == 6)
                         {
                             read(escrituraPipe[i][READ], &sumaTotalJuegos, sizeof(float));
-                            printf("suma total jeugos %f\n", sumaTotalJuegos);
+                            //printf("suma total jeugos %f\n", sumaTotalJuegos);
                         }
                         else if (k == 7)
                         {
                             read(escrituraPipe[i][READ], &promedioPrecioJuegos, sizeof(float));
-                            printf("promedio precio juegos %f\n", promedioPrecioJuegos);
+                            //printf("promedio precio juegos %f\n", promedioPrecioJuegos);
                         }
                         else if (k == 8)
                         {
-                            read(escrituraPipe[i][READ], &contadorW, sizeof(int)); 
-                            printf("contador Windows %d\n", contadorW);
+                            read(escrituraPipe[i][READ], &contadorW, sizeof(int));
+                            //printf("contador Windows %d\n", contadorW);
                         }
                         else if (k == 9)
                         {
-                            read(escrituraPipe[i][READ], &contadorMAC, sizeof(int)); 
-                            printf("contador MAC %d\n", contadorMAC);
+                            read(escrituraPipe[i][READ], &contadorMAC, sizeof(int));
+                            //printf("contador MAC %d\n", contadorMAC);
                         }
                         else if (k == 10)
                         {
-                            read(escrituraPipe[i][READ], &contadorL, sizeof(int)); 
-                            printf("contador linux %d\n", contadorL);
+                            read(escrituraPipe[i][READ], &contadorL, sizeof(int));
+                            //printf("contador linux %d\n", contadorL);
                         }
                         else if (k == 11)
                         {
-                            read(escrituraPipe[i][READ], &porcentajeW, sizeof(float)); 
-                            printf("porcentaje Windows%f\n", porcentajeW);
+                            read(escrituraPipe[i][READ], &porcentajeW, sizeof(float));
+                            //printf("porcentaje Windows %f\n", porcentajeW);
                         }
                         else if (k == 12)
                         {
-                            read(escrituraPipe[i][READ], &porcentajeMAC, sizeof(float)); 
-                            printf("porcentaje MAC %f\n", porcentajeMAC);
+                            read(escrituraPipe[i][READ], &porcentajeMAC, sizeof(float));
+                            //printf("porcentaje MAC %f\n", porcentajeMAC);
                         }
                         else if (k == 13)
                         {
-                            read(escrituraPipe[i][READ], &porcentajeL, sizeof(float)); 
-                            printf("porcentaje Linux %f\n", porcentajeL);
+                            read(escrituraPipe[i][READ], &porcentajeL, sizeof(float));
+                            //printf("porcentaje Linux %f\n", porcentajeL);
                         }
                         else if (k == 14)
                         {
                             read(escrituraPipe[i][READ], &juegosGratis, sizeof(char) * largoCharMax); // ARREGLAR *****************************************************************
-                            printf("juegos gratis: %s\n", juegosGratis);
+                            //printf("juegos gratis: %s\n", juegosGratis);
                         }
-                        
-                        
-                        
-                    
                     }
-                    printf("-------------------------------------------------------------\n");
-                    
+                    //printf("-------------------------------------------------------------\n");
+                    if (esListaVacia(lista))
+                    {
+                        insertarInicio(lista, anio, precioMasCaro,
+                                       precioMasBarato, nombreJuegoMasCaro,
+                                       nombreJuegoMasBarato, contadorJuegos,
+                                       sumaTotalJuegos, promedioPrecioJuegos,
+                                       contadorW, contadorMAC, contadorL,
+                                       porcentajeW, porcentajeMAC, porcentajeL,
+                                       juegosGratis);
+                    }
+                    // Si no, busca si los años coinciden
+                    else
+                    {
+                        // Si coiciden, compara y proceso (deja uno solo)
+                        if (aniosEquivalentes(lista, anio))
+                        {
+                            lista = actualizarNodo(lista, anio, precioMasCaro,
+                                                   precioMasBarato, nombreJuegoMasCaro,
+                                                   nombreJuegoMasBarato, contadorJuegos,
+                                                   sumaTotalJuegos, promedioPrecioJuegos,
+                                                   contadorW, contadorMAC, contadorL,
+                                                   porcentajeW, porcentajeMAC, porcentajeL,
+                                                   juegosGratis);
+                        }
+                        // Si no, agregalo
+                        else
+                        {
+                            insertarInicio(lista, anio, precioMasCaro,
+                                           precioMasBarato, nombreJuegoMasCaro,
+                                           nombreJuegoMasBarato, contadorJuegos,
+                                           sumaTotalJuegos, promedioPrecioJuegos,
+                                           contadorW, contadorMAC, contadorL,
+                                           porcentajeW, porcentajeMAC, porcentajeL,
+                                           juegosGratis);
+                        }
+                    }
                 }
             }
-            
-            //read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * a);
-            
 
-
+            // read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * a);
         }
+        recorrerLista(lista);
+        liberarLista(lista);
     }
 
+
+    
     return 0;
 }
