@@ -3,6 +3,7 @@
 #include <string.h>
 #define largoChar 300
 #define largoCharMax 9999
+#define nroElementosStruct 15
 
 /*------------- estructura de datos -------------*/
 typedef struct nodoGenerico
@@ -57,3 +58,5 @@ TDAlista *actualizarNodo(TDAlista *, int , float ,
                          int , int , int ,
                          float , float , float ,
                          char *);
+
+int anioPosicionLE(TDAlista * , int );

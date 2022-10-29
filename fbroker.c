@@ -68,7 +68,7 @@ TDAlista *copyList(TDAlista *head)
 
         // Allocate the memory for new Node
         // in the heap and set its data
-         TDAlista *nuevo = (TDAlista *)malloc(sizeof(TDAlista));
+        struct  *nuevo = (struct nodoGenerico *)malloc(sizeof(struct nodoGenerico));
 
         //newNode->anio = head->data;
 
@@ -97,3 +97,4 @@ TDAlista *copyList(TDAlista *head)
     }
 }
 */
+

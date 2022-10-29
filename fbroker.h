@@ -8,6 +8,7 @@
 #define READ 0
 #define largoChar 300
 #define largoCharMax 9999
+#define nroElementosStruct 15
 
 int randomizer(int);
 
@@ -51,4 +52,5 @@ int esListaVacia(TDAlista *);
 
 
 
-//TDAlista *copyList(TDAlista *);
+struct nodoGenerico *copyList(struct nodoGenerico *);
+

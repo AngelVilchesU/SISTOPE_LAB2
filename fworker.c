@@ -226,3 +226,25 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
     else
         return lista;
 }
+
+
+int anioPosicionLE(TDAlista * lista, int nodoEsp)
+{
+    if (!esListaVacia(lista))
+    {
+        int nodoAct = 0;
+        nodo * auxiliar = lista->inicio;
+        while (auxiliar != NULL)
+        {
+            if (nodoAct == nodoEsp)
+            {
+                return auxiliar->anio;
+            }
+            nodoAct++;
+            auxiliar = auxiliar->siguiente;
+        }
+        return 0;
+    }
+    else
+        return 0;
+}

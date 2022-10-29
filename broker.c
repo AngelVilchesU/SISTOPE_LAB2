@@ -85,18 +85,48 @@ int main(int argc, char *argv[])
         }
 
         ////////////////////////////////////////////////////////////////////////////
-        
+
         for (int i = 0; i < atoi(argv[4]); i++)
         {
-            TDAlista *LE = crearListaVacia();
-            read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * 5000);
-            printf("REspuesta del worker: Es lista vacia --> %d (1 para si y 0 para no)\n", esListaVacia(LE));
 
-            //copyList(LE);
-            recorrerLista(LE);
-            liberarLista(LE);
+            int cantNodo;
+            read(escrituraPipe[i][READ], &cantNodo, sizeof(int) * 1);
+            printf("Cantidad de nodos evaluados %d\n", cantNodo);
+            //char varible[largomax]
+            // 15 variables
+
+
+            if (cantNodo != 0) // Si existen nodos por evaluar
+            {
+                for (int j = 0; j < cantNodo; j++) // Por cada nodo en la lista enlazada
+                {
+                    //printf("ITERACION J = %d\n", j);
+                    //////////// Varibles locales ///////////
+                    int anio;
+                    ////////////////////////////////////////////
+                    for (int k = 0; k < nroElementosStruct; k++) // Por cada elemento del nodo de la lista enlazada
+                    {
+                        //printf("ITERACION K = %d\n", k);
+                        if (k == 0) // Refiere al año
+                        {
+                            //printf("ESPERO RESPUESTA DEL WORKER\n");
+                            read(escrituraPipe[i][READ], &anio, sizeof(int));
+                            printf("RESPUESTA RECIBIDA: ANIO %d\n", anio);
+                        }
+                        //printf("SIGO ITERANDO\n");
+                        
+                    
+                    }
+                    
+                    
+                }
+            }
+            
+            //read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * a);
+            
+
+
         }
-        
     }
 
     return 0;
