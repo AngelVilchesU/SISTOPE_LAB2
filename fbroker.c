@@ -26,33 +26,22 @@ int esListaVacia(TDAlista *lista)
         return 0;
 }
 
-void recorrerLista(TDAlista *lista)
+void recorrerLista(TDAlista *lista, int anioBase)
 {
     if (!esListaVacia(lista))
     {
 
-        nodo *auxiliar = lista->inicio;
-        printf("------------------------------------\n");
-        while (auxiliar != NULL)
+        nodo *aux = lista->inicio;
+        while (aux != NULL)
         {
-            printf("%d \n", auxiliar->anio);
-            printf("%f \n", auxiliar->precioMasCaro);
-            printf("%f \n", auxiliar->precioMasBarato);
-            printf("%s \n", auxiliar->nombreJuegoMasCaro);
-            printf("%s \n", auxiliar->nombreJuegoMasBarato);
-            printf("%d \n", auxiliar->contadorJuegos);
-            printf("%f \n", auxiliar->sumaTotalJuegos);
-            printf("%f \n", auxiliar->promedioPrecioJuegos);
-            printf("%d \n", auxiliar->contadorW);
-            printf("%d \n", auxiliar->contadorMC);
-            printf("%d \n", auxiliar->contadorL);
-            printf("%f \n", auxiliar->porcentajeW);
-            printf("%f \n", auxiliar->porcentajeMC);
-            printf("%f \n", auxiliar->porcentajeL);
-            printf("%s \n", auxiliar->juegosGratis);
-            auxiliar = auxiliar->siguiente;
+            if (aux->anio >= anioBase)
+            {
+                printf("Año %d\nJuego mas caro: %s\nJuego mas barato: %s\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
+                        aux->anio, aux->nombreJuegoMasCaro, aux->nombreJuegoMasBarato, aux->promedioPrecioJuegos,
+                        aux->porcentajeW, aux->porcentajeMC, aux->porcentajeL, aux->juegosGratis);
+            }
+            aux = aux->siguiente;
         }
-        printf("------------------------------------\n");
     }
     else
         printf("La lista está vacía\n");
@@ -100,14 +89,13 @@ TDAlista *copyList(TDAlista *head)
 }
 */
 
-
-void insertarInicio(TDAlista *lista, int anio, float precioMasCaro, 
-                    float precioMasBarato, char* nombreJuegoMasCaro,
-                    char* nombreJuegoMasBarato, int contadorJuegos, 
-                    float sumaTotalJuegos, float promedioPrecioJuegos, 
-                    int contadorW, int contadorMC, int contadorL, 
+void insertarInicio(TDAlista *lista, int anio, float precioMasCaro,
+                    float precioMasBarato, char *nombreJuegoMasCaro,
+                    char *nombreJuegoMasBarato, int contadorJuegos,
+                    float sumaTotalJuegos, float promedioPrecioJuegos,
+                    int contadorW, int contadorMC, int contadorL,
                     float porcentajeW, float porcentajeMC, float porcentajeL,
-                    char* juegosGratis)
+                    char *juegosGratis)
 {
     nodo *nuevo = (nodo *)malloc(sizeof(nodo));
     nuevo->anio = anio;
@@ -153,28 +141,28 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                 strcpy(auxStr, auxiliar->nombreJuegoMasCaro);
                 strcpy(auxiliar->nombreJuegoMasCaro, "");
                 strcpy(auxiliar->nombreJuegoMasCaro, strJuegoMasCaro(auxiliar->precioMasCaro, auxStr, precioMasCaro, nombreJuegoMasCaro));
-        
+
                 // Referente al nombre del juego más barato, obtenerlo en la línea de código del precio más barato
                 strcpy(auxStr, "");
                 strcpy(auxStr, auxiliar->nombreJuegoMasBarato);
                 strcpy(auxiliar->nombreJuegoMasBarato, "");
                 strcpy(auxiliar->nombreJuegoMasBarato, strJuegoMasBarato(auxiliar->precioMasBarato, auxStr, precioMasBarato, nombreJuegoMasBarato));
-                
+
                 // Referente al precio más caro, comparar entre la info. obtenida y el nodo del mismo año (extraer el mayor)
                 auxiliar->precioMasCaro = valorMayor(auxiliar->precioMasCaro, precioMasCaro);
-                
+
                 // Referente al precio más barato, comparar entre la info. obtenida y el nodo del mismo año (extraer el menor)
                 auxiliar->precioMasBarato = valorMenor(auxiliar->precioMasBarato, precioMasBarato);
-                
+
                 // Referente al contador de juegos, se le suma 1 al nodo con juegos del mismo año (esta condición if)
                 auxiliar->contadorJuegos++;
-                
+
                 // Referente a la suma total de juegos, sumar precio del juego existente en el nodo y el obtenido
                 auxiliar->sumaTotalJuegos = auxiliar->sumaTotalJuegos + precioMasCaro; // Es lo mismo que precioJuego
-                
+
                 // Referente al promedio, calcularlo con el promedio existente y el precio obtenido
                 auxiliar->promedioPrecioJuegos = promedio(auxiliar->promedioPrecioJuegos, promedioPrecioJuegos);
-                
+
                 // Referente al contador de juegos Windows, sumarlo en caso de que corresponda, lo mismo con MC y L
                 if (contadorW)
                 {
@@ -188,7 +176,7 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                 {
                     auxiliar->contadorL++;
                 }
-                
+
                 // Referente al porcentaje de juegos Windows, calcular el promedio considerando que...
                 // ...si existe se calcula el promedio con el dato de nodo y un 100% del obtenido, caso contrario...
                 // ...se calcula el promedio con el dato de nodo y un 0% del obtenido, los mismo con MC y L
@@ -200,7 +188,7 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                 // ...existente en el nodo
                 strcat(juegosGratis, "\n");
                 strcat(auxiliar->juegosGratis, juegosGratis);
-                
+
                 // actualizarNodo
 
                 return lista;
@@ -250,7 +238,7 @@ float valorMenor(float valorA, float valorB)
     return valorB;
 }
 
-char* strJuegoMasCaro(float valorA, char* juegoA, float valorB, char* juegoB)
+char *strJuegoMasCaro(float valorA, char *juegoA, float valorB, char *juegoB)
 {
     if (valorA >= valorB)
     {
@@ -259,7 +247,7 @@ char* strJuegoMasCaro(float valorA, char* juegoA, float valorB, char* juegoB)
     return juegoB;
 }
 
-char* strJuegoMasBarato(float valorA, char* juegoA, float valorB, char* juegoB)
+char *strJuegoMasBarato(float valorA, char *juegoA, float valorB, char *juegoB)
 {
     if (valorA <= valorB)
     {
@@ -271,4 +259,19 @@ char* strJuegoMasBarato(float valorA, char* juegoA, float valorB, char* juegoB)
 float promedio(float valorA, float valorB)
 {
     return ((valorA + valorB) / 2);
+}
+
+void imprimirEnFlujoDesdeAnio(TDAlista *lista_enlace, FILE *flujo, int anioBase)
+{
+    nodo *aux = lista_enlace->inicio;
+    while (aux != NULL)
+    {
+        if (aux->anio >= anioBase)
+        {
+            fprintf(flujo, "Año %d\nJuego mas caro: %s\nJuego mas barato: %s\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
+                    aux->anio, aux->nombreJuegoMasCaro, aux->nombreJuegoMasBarato, aux->promedioPrecioJuegos,
+                    aux->porcentajeW, aux->porcentajeMC, aux->porcentajeL, aux->juegosGratis);
+        }
+        aux = aux->siguiente;
+    }
 }

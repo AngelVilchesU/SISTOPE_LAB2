@@ -72,8 +72,8 @@ int main(int argc, char* argv[])
         }
     }
     validacionArgsOPT(iFlag, oFlag, dFlag, pFlag, nFlag, argv);
-    printf("Los parametros ingresados son:\niFlag: %s\noFlag: %s\ndFlag: %s\npFlag: %s\nnFlag: %s\nbFlag: %d\n", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, bFlag);
-    
+    char bFlagStr[2];
+    sprintf(bFlagStr, "%d", bFlag);    
     /************************************ Lógica de solución - punto 2 y 3 ************************************/
     pid_t pidP;
     pidP = fork();
@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
     else if (pidP == 0)
     {
         wait(&status);
-        execl("./broker", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, NULL);
+        execl("./broker", nombreArchivoEntrada, nombreArchivoSalida, anioInicioJuego, precioMinimoJuego, cantidadWorkers, bFlagStr, NULL);
     
     }
     else

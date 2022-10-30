@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         while (fgets(linea, 300, dctoEntrada) != NULL)
         {
             random = randomizer(atoi(argv[4])); // Se llama a la función randomizer obteniendo un número aleatorio entre 0 y el nro. de workers
-            printf("numero random: %d\n", random);
+            //printf("numero random: %d\n", random);
             ///////
             sprintf(numero, " Numero: %d\n", random);
             strcpy(lineaFinal, linea);
@@ -96,15 +96,11 @@ int main(int argc, char *argv[])
             read(escrituraPipe[i][READ], &cantNodo, sizeof(int));
 
             read(escrituraPipe[i][READ], &contadorJuegos, sizeof(int));
-            printf("Cantidad de nodos evaluados %d\n", cantNodo);
-            printf("Cantidad de juegos/lineas evaluados %d\n", contadorJuegos);
-            printf("WORKER NRO: %d\n", i);
-            // char varible[largomax]
-            //  15 variables
-
+            //printf("Cantidad de nodos evaluados %d\n", cantNodo);
+            printf("Hijo %d: lineas procesadas: %d\n", i + 1, contadorJuegos);
+            
             if (cantNodo != 0) // Si existen nodos por evaluar
             {
-                //printf("-------------------------------------------------------------\n");
                 for (int j = 0; j < cantNodo; j++) // Por cada nodo en la lista enlazada
                 {
                     //////////// Varibles locales ///////////
@@ -241,10 +237,32 @@ int main(int argc, char *argv[])
                     }
                 }
             }
-
-            // read(escrituraPipe[i][READ], LE, sizeof(TDAlista) * a);
         }
-        recorrerLista(lista);
+
+        
+        FILE * archivoSalida;
+        archivoSalida = fopen(argv[1], "w");
+        imprimirEnFlujoDesdeAnio(lista, archivoSalida, atoi(argv[2]));
+        fclose(archivoSalida);
+        
+        if (atoi(argv[5]) == 1)
+        {
+            recorrerLista(lista, atoi(argv[2]));
+        }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
         liberarLista(lista);
     }
 

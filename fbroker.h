@@ -42,7 +42,7 @@ TDAlista *crearListaVacia();
 
 void liberarLista(TDAlista* );
 
-void recorrerLista(TDAlista *);
+void recorrerLista(TDAlista *, int);
 
 int esListaVacia(TDAlista *);
 
@@ -80,3 +80,4 @@ float valorMayor(float , float );
 
 float valorMenor(float , float );
 
+void imprimirEnFlujoDesdeAnio(TDAlista * , FILE * , int);
