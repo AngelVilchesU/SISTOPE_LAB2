@@ -6,14 +6,15 @@
 #include <sys/wait.h>
 #include <string.h>
 
+// Entradas: No considera, a excepción de la información entregada vía PIPES
+// Salidas: No considera
+// Descripción: Proceso principal del presente código que abarca desde el punto de lógica...
+//              ...8 hasta el punto de lógica 12
 int main()
 {
-    char buffer[largoChar];
-    char gigante[5000];
-    int number = 0;
-    int contador = 0;
-
-    // Posiciones en la linea
+    char buffer[largoChar]; // Recibe lo entregado vía PIPE
+    int contador = 0; // Contador de líneas evaluadas
+    // Posiciones en la linea dada información entregada
     int posicionFinal = 10;
     int posicionEsL = 9;
     int posicionEsMC = 8;
@@ -23,27 +24,24 @@ int main()
     int posicionPrecio = 3;
     int posicionNombreJuego = 1;
     float sumaTotalJuegos = 0;
-
-    TDAlista *LE = crearListaVacia();
-
-    while (1)
+    TDAlista *LE = crearListaVacia(); // Creación de lista enlazada para almacenar los resultados/calculos abarcados
+    /************************************ Lógica de solución - punto 8 ************************************/
+    while (1) // Ciclo infinito hasta recibir la orden 'FIN'
     {
-        read(STDIN_FILENO, &buffer, sizeof(char) * 300);
-        // read(STDIN_FILENO, &number, sizeof(int));
-        if (strcmp(buffer, "FIN") == 0)
+        read(STDIN_FILENO, &buffer, sizeof(char) * 300); // Se lee una línea entregada
+        /************************************ Lógica de solución - punto 11 ************************************/
+        if (strcmp(buffer, "FIN") == 0) // Si dicha línea corresponde a la orden 'FIN'
         {
-
             // Cantidad de nodos procesados
-            int largo = largoLE(LE);
-            write(STDOUT_FILENO, &largo, sizeof(int));  
-
-            write(STDOUT_FILENO, &contador, sizeof(int));
-
+            int largo = largoLE(LE); 
+            write(STDOUT_FILENO, &largo, sizeof(int)); // Se envía los nodos existentes en la lista enlazada (largo)
+            /************************************ Lógica de solución - punto 10 ************************************/
+            write(STDOUT_FILENO, &contador, sizeof(int)); // Se envía la cantidad de líneas evaluadas
             if (contador != 0) // Si existen nodos por evaluar
             {
                 for (int i = 0; i < contador; i++) // Por cada nodo en la lista enlazada
                 {
-                    for (int j = 0; j < nroElementosStruct; j++) // Por cada elemento del nodo de la lista enlazada
+                    for (int j = 0; j < nroElementosStruct; j++) // Por cada elemento del nodo de la lista enlazada, se envía la información al broker
                     {
                         if (j == 0) // Refiere al año
                         {
@@ -130,13 +128,10 @@ int main()
         }
         else
         {   
+            /************************************ Lógica de solución - punto 9 ************************************/
             int nroJuego = 1;
-
-            ///////////////////////////////////////////////
-            // 980880,Twinfold,0,60.0,False,2018,False,Yes,No,No
             int posicionAct = 0;
-            char *token = strtok(buffer, ",");
-            //////////////////////////
+            char *token = strtok(buffer, ","); // Se fragmente la línea recibida de acuerdo a un coma(,)
             char nombreJuego[largoChar] = "";
             float precioJuego;
             int anio;
@@ -147,8 +142,7 @@ int main()
             float promWindows = 0;
             float promMac = 0;
             float promLinux = 0;
-
-            while (token != NULL)
+            while (token != NULL) // Mientras queden elementos por evaluar en la línea fragmentada
             {
                 if (posicionAct == posicionNombreJuego) // Aquí token = nombre del juego
                 {
@@ -157,7 +151,6 @@ int main()
                 else if (posicionAct == posicionPrecio) // Aquí token = precio
                 {
                     precioJuego = atof(token);
-                    //sumaTotalJuegos = sumaTotalJuegos + precioJuego;
                 }
                 else if (posicionAct == posicionAnio) // Aquí token = año
                 {
@@ -165,7 +158,7 @@ int main()
                 }
                 else if (posicionAct == posicionEsGratis) // Aquí token = si el juego es gratis
                 {
-                    if (strcmp(token, "Yes"))
+                    if (strcmp(token, "Yes")) // Si el juego es gratis...
                     {
                         strcat(esGratis, nombreJuego);
                         strcat(esGratis, "\n");
@@ -173,7 +166,7 @@ int main()
                 }
                 else if (posicionAct == posicionEsW) // Aquí token = si el juego está disponible en Windows
                 {
-                    if (strcmp(token, "Yes") == 0)
+                    if (strcmp(token, "Yes") == 0) // Si el juegos considera Windows...
                     {
                         esWindows = 1;
                         promWindows = 100.0;
@@ -181,7 +174,7 @@ int main()
                 }
                 else if (posicionAct == posicionEsMC) // Aquí token = si el juego está disponible en Mac
                 {
-                    if (strcmp(token, "Yes") == 0)
+                    if (strcmp(token, "Yes") == 0) // Si el juegos considera Mac...
                     {
                         esMac = 1;
                         promMac = 100.0;
@@ -189,16 +182,16 @@ int main()
                 }
                 else if (posicionAct == posicionEsL) // Aquí token = si el juego está disponible en Linux
                 {
-                    if (strcmp(token, "Yes") == 0)
+                    if (strcmp(token, "Yes") == 0) // Si el juegos considera Linux...
                     {
                         esLinux = 1;
                         promLinux = 100.0;
                     }
                 }
-                token = strtok(NULL, ",");
-                posicionAct++;
+                token = strtok(NULL, ","); // Se continua al siguiente elemento
+                posicionAct++; // Aumenta la posición del elemento
             }
-            // Si es lista vacia, lo agrega
+            // Si es lista enlazada es vacia, agrega la información obtenida
             if (esListaVacia(LE))
             {
                 insertarInicio(LE, anio, precioJuego,
@@ -212,7 +205,7 @@ int main()
             // Si no, busca si los años coinciden
             else
             {
-                // Si coiciden, compara y proceso (deja uno solo)
+                // Si coiciden, compara y procesa con la información obtenida (deja uno solo)
                 if (aniosEquivalentes(LE, anio))
                 {
                     // La información se actualiza en el nodo ya existente en la LE de acuerdo a los parámetros obtenidos
@@ -240,7 +233,7 @@ int main()
                                         promWindows, promMac, promLinux,
                                         esGratis);
                 }
-                // Si no, agregalo
+                // Si no, se agrega la información obtenida
                 else
                 {
                     insertarInicio(LE, anio, precioJuego,
@@ -252,10 +245,9 @@ int main()
                                    esGratis);
                 }
             }
-            contador++;
+            contador++; // Se ha evaluado un juego más
         }
     }
-
-    liberarLista(LE);
-    return 0;
+    liberarLista(LE); // Se libera la memoria empleada
+    return 0; // Finaliza el proceso
 }

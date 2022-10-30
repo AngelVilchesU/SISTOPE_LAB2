@@ -12,7 +12,6 @@
 
 int randomizer(int);
 
-/*------------- estructura de datos -------------*/
 typedef struct nodoGenerico
 {
     int anio;
@@ -46,13 +45,6 @@ void recorrerLista(TDAlista *, int);
 
 int esListaVacia(TDAlista *);
 
-
-
-
-
-
-
-
 void insertarInicio(TDAlista *, int , float , 
                     float , char* ,
                     char* , int , 
@@ -76,6 +68,7 @@ char* strJuegoMasCaro(float , char* , float , char* );
 char* strJuegoMasBarato(float , char* , float , char* );
 
 float promedio(float , float );
+
 float valorMayor(float , float );
 
 float valorMenor(float , float );

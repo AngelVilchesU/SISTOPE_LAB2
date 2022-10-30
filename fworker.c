@@ -1,6 +1,8 @@
 #include "fworker.h"
 
-/*------------- operaciones -------------*/
+// Entradas: No considera
+// Salidas: Una lista enlazada nula (pero con memoria reservada)
+// Descripción: Se reserva la memoria necesaria para generar una lista enlaza inicialmente vacia
 TDAlista *crearListaVacia()
 {
     TDAlista *lista = (TDAlista *)malloc(sizeof(TDAlista));
@@ -8,6 +10,9 @@ TDAlista *crearListaVacia()
     return lista;
 }
 
+// Entradas: Una lista enlazada
+// Salidas: 1 si la lista está vacia, caso contrario un 0
+// Descripción: Se evalua la cabecera de la lista enlazada (nula o no) para determinar si es vacia o no
 int esListaVacia(TDAlista *lista)
 {
     if (lista->inicio == NULL)
@@ -15,37 +20,10 @@ int esListaVacia(TDAlista *lista)
     else
         return 0;
 }
-/*
-void recorrerLista(TDAlista *lista)
-{
-    if (!esListaVacia(lista))
-    {
-        nodo *auxiliar = lista->inicio;
-        while (auxiliar != NULL)
-        {
-            printf("%d ", auxiliar->anio);
-            printf("%f ", auxiliar->precioMasCaro);
-            printf("%f ", auxiliar->precioMasBarato);
-            printf("%s ", auxiliar->nombreJuegoMasCaro);
-            printf("%s ", auxiliar->nombreJuegoMasBarato);
-            printf("%d ", auxiliar->contadorJuegos);
-            printf("%f ", auxiliar->sumaTotalJuegos);
-            printf("%f ", auxiliar->promedioPrecioJuegos);
-            printf("%d ", auxiliar->contadorW);
-            printf("%d ", auxiliar->contadorMC);
-            printf("%d ", auxiliar->contadorL);
-            printf("%f ", auxiliar->porcentajeW);
-            printf("%f ", auxiliar->porcentajeMC);
-            printf("%f ", auxiliar->porcentajeL);
-            printf("%s ", auxiliar->juegosGratis);
-            auxiliar = auxiliar->siguiente;
-        }
-        printf("\n");
-    }
-    else
-        printf("La lista está vacía\n");
-}
-*/
+
+// Entradas: Una lista enlazada y todos los datos de acuerdo a su estructura definida en fbroker.h
+// Salidas: No considera
+// Descripción: Dado los datos ingresados, estos son adicionados en un nuevo nodo de la lista enlazada ingresada
 void insertarInicio(TDAlista *lista, int anio, float precioMasCaro, 
                     float precioMasBarato, char* nombreJuegoMasCaro,
                     char* nombreJuegoMasBarato, int contadorJuegos, 
@@ -74,6 +52,9 @@ void insertarInicio(TDAlista *lista, int anio, float precioMasCaro,
     lista->inicio = nuevo;
 }
 
+// Entradas: Una lista enlazada
+// Salidas: No considera
+// Descripción: Se elimina el primer nodo de la lista enlazada
 void eliminarInicio(TDAlista *lista)
 {
     nodo *auxiliar;
@@ -85,11 +66,18 @@ void eliminarInicio(TDAlista *lista)
     }
 }
 
+// Entradas: Una lista enlazada
+// Salidas: No considera
+// Descripción: Se libera la memoria utlizada en la lista enlazada
 void liberarLista(TDAlista* lista)
 {
     free(lista);
 }
 
+// Entradas: Una lista enlazada y un año
+// Salidas: 1 si el años existe en la lista enlazada, 0 si no existe
+// Descripción: Se evalua la existencia de un año en los nodos de la lista enlazada...
+//              que coincida con el ingresado
 int aniosEquivalentes(TDAlista *lista, int anio)
 {
     if (!esListaVacia(lista))
@@ -109,6 +97,9 @@ int aniosEquivalentes(TDAlista *lista, int anio)
         return 0;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares)
+// Salidas: El valor mayor entre los ingresados
+// Descripción: Se comparan los valores ingresados en búsqueda del mayor
 float valorMayor(float valorA, float valorB)
 {
     if (valorA >= valorB)
@@ -118,6 +109,9 @@ float valorMayor(float valorA, float valorB)
     return valorB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares)
+// Salidas: El valor menor entre los ingresados
+// Descripción: Se comparan los valores ingresados en búsqueda del menor
 float valorMenor(float valorA, float valorB)
 {
     if (valorA <= valorB)
@@ -127,6 +121,9 @@ float valorMenor(float valorA, float valorB)
     return valorB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares) asociados a nombres (de juego)
+// Salidas: El nombre asociado al valor mayor
+// Descripción: Se comparan los valores ingresados en búsqueda del mayor retornando su nombre asociado
 char* strJuegoMasCaro(float valorA, char* juegoA, float valorB, char* juegoB)
 {
     if (valorA >= valorB)
@@ -136,6 +133,9 @@ char* strJuegoMasCaro(float valorA, char* juegoA, float valorB, char* juegoB)
     return juegoB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares) asociados a nombres (de juego)
+// Salidas: El nombre asociado al valor menor
+// Descripción: Se comparan los valores ingresados en búsqueda del menor retornado su nombre asociado
 char* strJuegoMasBarato(float valorA, char* juegoA, float valorB, char* juegoB)
 {
     if (valorA <= valorB)
@@ -145,11 +145,19 @@ char* strJuegoMasBarato(float valorA, char* juegoA, float valorB, char* juegoB)
     return juegoB;
 }
 
+// Entradas: Dos valores flotantes
+// Salidas: El promedio entre ambos
+// Descripción: Se realiza y retorna el calculo del promedio entre los valores ingresados
 float promedio(float valorA, float valorB)
 {
     return ((valorA + valorB) / 2);
 }
 
+// Entradas: Una lista enlazada y todos los datos de acuerdo a su estructura definida en fbroker.h
+// Salidas: Una lista enlazada actualizada
+// Descripción: Dados los parámetros recibidos, estos con procesados en el nodo en el cual los años...
+//              ...coincidan comparando la información existente y la información ingresada considerando...
+//              ...los calculos necesarios dado el enunciado del laboratorio
 TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                          float precioMasBarato, char *nombreJuegoMasCaro,
                          char *nombreJuegoMasBarato, int contadorJuegos,
@@ -234,7 +242,9 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
         return lista;
 }
 
-
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: Año del nodo
+// Descripción: Se busca el nodo especifico retornando su año
 int anioPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -256,6 +266,9 @@ int anioPosicionLE(TDAlista * lista, int nodoEsp)
         return 0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: precio más caro
+// Descripción: Se busca el nodo especifico retornando su precio más caro
 float precioMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -277,6 +290,9 @@ float precioMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: precio más barato
+// Descripción: Se busca el nodo especifico retornando su precio más barato
 float precioMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -298,6 +314,9 @@ float precioMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: nombre del juego más caro
+// Descripción: Se busca el nodo especifico retornando el nombre del juego más caro
 char* nombreJuegoMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -319,6 +338,9 @@ char* nombreJuegoMasCaroPosicionLE(TDAlista * lista, int nodoEsp)
         return NULL;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: nombre del juego más barato
+// Descripción: Se busca el nodo especifico retornando el nombre del juego más barato
 char* nombreJuegoMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -340,6 +362,9 @@ char* nombreJuegoMasBaratoPosicionLE(TDAlista * lista, int nodoEsp)
         return NULL;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: contador de juegos
+// Descripción: Se busca el nodo especifico retornando su contador de juegos
 int contadorJuegosPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -361,6 +386,9 @@ int contadorJuegosPosicionLE(TDAlista * lista, int nodoEsp)
         return 0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: suma total de precios de juegos
+// Descripción: Se busca el nodo especifico retornando la suma total de precios de juegos
 float sumaTotalJuegosPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -382,6 +410,9 @@ float sumaTotalJuegosPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: promedio de precios de juegos
+// Descripción: Se busca el nodo especifico retornando su promedio de precios de juegos
 float promedioPrecioJuegosPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -403,6 +434,9 @@ float promedioPrecioJuegosPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: contador de juegos Windows
+// Descripción: Se busca el nodo especifico retornando su contador de juegos Windows
 int contadorWPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -424,6 +458,9 @@ int contadorWPosicionLE(TDAlista * lista, int nodoEsp)
         return 0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: contador de juegos Mac
+// Descripción: Se busca el nodo especifico retornando su contador de juegos Mac
 int contadorMACPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -445,6 +482,9 @@ int contadorMACPosicionLE(TDAlista * lista, int nodoEsp)
         return 0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: contador de juegos Linux
+// Descripción: Se busca el nodo especifico retornando su contador de juegos Linux
 int contadorLPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -466,6 +506,9 @@ int contadorLPosicionLE(TDAlista * lista, int nodoEsp)
         return 0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: porcentaje de juegos Windows
+// Descripción: Se busca el nodo especifico retornando su porcentaje de juegos Windows
 float porcentajeWPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -487,6 +530,9 @@ float porcentajeWPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: porcentaje de juegos Mac
+// Descripción: Se busca el nodo especifico retornando su porcentaje de juegos Mac
 float porcentajeMACPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -508,6 +554,9 @@ float porcentajeMACPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: porcentaje de juegos Linux
+// Descripción: Se busca el nodo especifico retornando su porcentaje de juegos Linux
 float porcentajeLPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -529,6 +578,9 @@ float porcentajeLPosicionLE(TDAlista * lista, int nodoEsp)
         return 0.0;
 }
 
+// Entradas: Una lista enlazada y una posición de nodo
+// Salidas: String de juegos gratis
+// Descripción: Se busca el nodo especifico retornando su string de juegos gratis
 char* juegosGratisPosicionLE(TDAlista * lista, int nodoEsp)
 {
     if (!esListaVacia(lista))
@@ -550,6 +602,9 @@ char* juegosGratisPosicionLE(TDAlista * lista, int nodoEsp)
         return NULL;
 }
 
+// Entradas: Una lista enlazada
+// Salidas: largo de la lista enlazada
+// Descripción: Se recorre la lista enlazada contabilizando sus nodos
 int largoLE(TDAlista *lista)
 {
     if (!esListaVacia(lista))

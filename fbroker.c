@@ -1,11 +1,16 @@
 #include "fbroker.h"
 
+// Entradas: Número entero (nro. de workers) considerado como el "límite"
+// Salidas: // Número aleatorio entre 0 y el valor ingresado
+// Descripción: Se genera y retorna un número aleatorio entre 0 y el valor ingresado
 int randomizer(int nroWorkers)
 {
     return (rand() % nroWorkers);
 }
 
-/*------------- operaciones -------------*/
+// Entradas: No considera
+// Salidas: Una lista enlazada nula (pero con memoria reservada)
+// Descripción: Se reserva la memoria necesaria para generar una lista enlaza inicialmente vacia
 TDAlista *crearListaVacia()
 {
     TDAlista *lista = (TDAlista *)malloc(sizeof(TDAlista));
@@ -13,11 +18,17 @@ TDAlista *crearListaVacia()
     return lista;
 }
 
+// Entradas: Una lista enlazada
+// Salidas: No considera
+// Descripción: Se libera la memoria utlizada en la lista enlazada
 void liberarLista(TDAlista *lista)
 {
     free(lista);
 }
 
+// Entradas: Una lista enlazada
+// Salidas: 1 si la lista está vacia, caso contrario un 0
+// Descripción: Se evalua la cabecera de la lista enlazada (nula o no) para determinar si es vacia o no
 int esListaVacia(TDAlista *lista)
 {
     if (lista->inicio == NULL)
@@ -26,69 +37,33 @@ int esListaVacia(TDAlista *lista)
         return 0;
 }
 
+// Entradas: Una lista enlazada y un año como entero "base"
+// Salidas: No considera
+// Descripción: Imprime por pantalla la información en cada nodo de la lista enlazada...
+//              ... desde un año especifico (el ingresado)
 void recorrerLista(TDAlista *lista, int anioBase)
 {
-    if (!esListaVacia(lista))
+    if (!esListaVacia(lista)) // Si no es lista vacia
     {
-
         nodo *aux = lista->inicio;
-        while (aux != NULL)
+        while (aux != NULL) // Mientras no sea nulo
         {
-            if (aux->anio >= anioBase)
+            if (aux->anio >= anioBase) // Si el año del nodo es mayor/igual al año ingresado...
             {
                 printf("Año %d\nJuego mas caro: %s\nJuego mas barato: %s\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
                         aux->anio, aux->nombreJuegoMasCaro, aux->nombreJuegoMasBarato, aux->promedioPrecioJuegos,
                         aux->porcentajeW, aux->porcentajeMC, aux->porcentajeL, aux->juegosGratis);
             }
-            aux = aux->siguiente;
+            aux = aux->siguiente; // Siguiente nodo
         }
     }
-    else
+    else // Si es lista vacia
         printf("La lista está vacía\n");
 }
 
-/*
-TDAlista *copyList(TDAlista *head)
-{
-    if (head == NULL)
-    {
-        return NULL;
-    }
-    else
-    {
-
-        // Allocate the memory for new Node
-        // in the heap and set its data
-        struct  *nuevo = (struct nodoGenerico *)malloc(sizeof(struct nodoGenerico));
-
-        //newNode->anio = head->data;
-
-        nuevo->anio = head->anio;
-        nuevo->precioMasCaro = head->precioMasCaro;
-        nuevo->precioMasBarato = head->precioMasBarato;
-        strcpy(nuevo->nombreJuegoMasCaro, head->nombreJuegoMasCaro);
-        strcpy(nuevo->nombreJuegoMasBarato, head->nombreJuegoMasBarato);
-        nuevo->contadorJuegos = head->contadorJuegos;
-        nuevo->sumaTotalJuegos = head->sumaTotalJuegos;
-        nuevo->promedioPrecioJuegos = head->promedioPrecioJuegos;
-        nuevo->contadorW = head->contadorW;
-        nuevo->contadorMC = head->contadorMC;
-        nuevo->contadorL = head->contadorL;
-        nuevo->porcentajeW = head->porcentajeW;
-        nuevo->porcentajeMC = head->porcentajeMC;
-        nuevo->porcentajeL = head->porcentajeL;
-        strcpy(nuevo->juegosGratis, head->juegosGratis);
-
-        // Recursively set the next pointer of
-        // the new Node by recurring for the
-        // remaining nodes
-        nuevo->siguiente = copyList(head->siguiente);
-
-        return nuevo;
-    }
-}
-*/
-
+// Entradas: Una lista enlazada y todos los datos de acuerdo a su estructura definida en fbroker.h
+// Salidas: No considera
+// Descripción: Dado los datos ingresados, estos son adicionados en un nuevo nodo de la lista enlazada ingresada
 void insertarInicio(TDAlista *lista, int anio, float precioMasCaro,
                     float precioMasBarato, char *nombreJuegoMasCaro,
                     char *nombreJuegoMasBarato, int contadorJuegos,
@@ -117,6 +92,11 @@ void insertarInicio(TDAlista *lista, int anio, float precioMasCaro,
     lista->inicio = nuevo;
 }
 
+// Entradas: Una lista enlazada y todos los datos de acuerdo a su estructura definida en fbroker.h
+// Salidas: Una lista enlazada actualizada
+// Descripción: Dados los parámetros recibidos, estos con procesados en el nodo en el cual los años...
+//              ...coincidan comparando la información existente y la información ingresada considerando...
+//              ...los calculos necesarios dado el enunciado del laboratorio
 TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                          float precioMasBarato, char *nombreJuegoMasCaro,
                          char *nombreJuegoMasBarato, int contadorJuegos,
@@ -125,17 +105,16 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                          float porcentajeW, float porcentajeMC, float porcentajeL,
                          char *juegosGratis)
 {
-    if (!esListaVacia(lista))
+    if (!esListaVacia(lista)) // si la lista no es vacia...
     {
         nodo *auxiliar = lista->inicio;
-        while (auxiliar != NULL)
+        while (auxiliar != NULL) // Mientras no sea nula
         {
-            if (auxiliar->anio == anio)
+            if (auxiliar->anio == anio) // Si el año coincide
             {
                 // La información se actualiza en el nodo ya existente en la LE de acuerdo a los parámetros obtenidos
                 // Puntos a considerar
                 // Referente al año, ninguno
-
                 // Referente al nombre del juego más caro, obtenerlo en la línea de código del precio más caro
                 char auxStr[largoChar];
                 strcpy(auxStr, auxiliar->nombreJuegoMasCaro);
@@ -188,38 +167,42 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
                 // ...existente en el nodo
                 strcat(juegosGratis, "\n");
                 strcat(auxiliar->juegosGratis, juegosGratis);
-
-                // actualizarNodo
-
-                return lista;
+                return lista; // Finaliza el proceso y se retorna la lista enlazada actualizada
             }
-            auxiliar = auxiliar->siguiente;
+            auxiliar = auxiliar->siguiente; // Siguiente elemento
         }
-        return lista;
+        return lista; // Retorno de la lista sin modificación (en caso de no existir año)
     }
-    else
+    else // Es lista vacia
         return lista;
 }
 
+// Entradas: Una lista enlazada y un año
+// Salidas: 1 si el años existe en la lista enlazada, 0 si no existe
+// Descripción: Se evalua la existencia de un año en los nodos de la lista enlazada...
+//              que coincida con el ingresado
 int aniosEquivalentes(TDAlista *lista, int anio)
 {
-    if (!esListaVacia(lista))
+    if (!esListaVacia(lista)) // Si la lista no es vacia...
     {
         nodo *auxiliar = lista->inicio;
-        while (auxiliar != NULL)
+        while (auxiliar != NULL) // Mientras no sea nula
         {
-            if (auxiliar->anio == anio)
+            if (auxiliar->anio == anio) // Si los años coinciden
             {
-                return 1;
+                return 1; // retorna 1
             }
-            auxiliar = auxiliar->siguiente;
+            auxiliar = auxiliar->siguiente; // Siguiente nodo
         }
         return 0;
     }
-    else
+    else // Si la lista es vacia
         return 0;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares)
+// Salidas: El valor mayor entre los ingresados
+// Descripción: Se comparan los valores ingresados en búsqueda del mayor
 float valorMayor(float valorA, float valorB)
 {
     if (valorA >= valorB)
@@ -229,6 +212,9 @@ float valorMayor(float valorA, float valorB)
     return valorB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares)
+// Salidas: El valor menor entre los ingresados
+// Descripción: Se comparan los valores ingresados en búsqueda del menor
 float valorMenor(float valorA, float valorB)
 {
     if (valorA <= valorB)
@@ -238,6 +224,9 @@ float valorMenor(float valorA, float valorB)
     return valorB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares) asociados a nombres (de juego)
+// Salidas: El nombre asociado al valor mayor
+// Descripción: Se comparan los valores ingresados en búsqueda del mayor retornando su nombre asociado
 char *strJuegoMasCaro(float valorA, char *juegoA, float valorB, char *juegoB)
 {
     if (valorA >= valorB)
@@ -247,6 +236,9 @@ char *strJuegoMasCaro(float valorA, char *juegoA, float valorB, char *juegoB)
     return juegoB;
 }
 
+// Entradas: Dos valores flotantes (precios en dolares) asociados a nombres (de juego)
+// Salidas: El nombre asociado al valor menor
+// Descripción: Se comparan los valores ingresados en búsqueda del menor retornado su nombre asociado
 char *strJuegoMasBarato(float valorA, char *juegoA, float valorB, char *juegoB)
 {
     if (valorA <= valorB)
@@ -256,11 +248,18 @@ char *strJuegoMasBarato(float valorA, char *juegoA, float valorB, char *juegoB)
     return juegoB;
 }
 
+// Entradas: Dos valores flotantes
+// Salidas: El promedio entre ambos
+// Descripción: Se realiza y retorna el calculo del promedio entre los valores ingresados
 float promedio(float valorA, float valorB)
 {
     return ((valorA + valorB) / 2);
 }
 
+// Entradas: Una lista enlazada, el flujo de escritura y un año
+// Salidas: No considera
+// Descripción: Dada la lista enlazada, su contenido es impreso en el flujo ingresado...
+//              ...considerando un filtro de los años en cada nodo de la lista enlazada
 void imprimirEnFlujoDesdeAnio(TDAlista *lista_enlace, FILE *flujo, int anioBase)
 {
     nodo *aux = lista_enlace->inicio;

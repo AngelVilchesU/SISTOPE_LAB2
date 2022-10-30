@@ -5,7 +5,6 @@
 #define largoCharMax 9999
 #define nroElementosStruct 15
 
-/*------------- estructura de datos -------------*/
 typedef struct nodoGenerico
 {
     int anio;
@@ -34,8 +33,6 @@ typedef struct listaGenerica
 TDAlista *crearListaVacia();
 
 int esListaVacia(TDAlista *);
-
-//void recorrerLista(TDAlista *);
 
 void insertarInicio(TDAlista *, int , float , 
                     float , char* ,
