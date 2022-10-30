@@ -146,7 +146,7 @@ int main()
             {
                 if (posicionAct == posicionNombreJuego) // Aquí token = nombre del juego
                 {
-                    strcat(nombreJuego, token);
+                    strcat(nombreJuego, token); 
                 }
                 else if (posicionAct == posicionPrecio) // Aquí token = precio
                 {
@@ -158,7 +158,7 @@ int main()
                 }
                 else if (posicionAct == posicionEsGratis) // Aquí token = si el juego es gratis
                 {
-                    if (strcmp(token, "Yes")) // Si el juego es gratis...
+                    if (strcmp(token, "True") == 0) // Si el juego es gratis...
                     {
                         strcat(esGratis, nombreJuego);
                         strcat(esGratis, "\n");

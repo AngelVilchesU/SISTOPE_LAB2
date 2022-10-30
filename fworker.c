@@ -227,7 +227,7 @@ TDAlista *actualizarNodo(TDAlista *lista, int anio, float precioMasCaro,
 
                 // Referente a los juegos gratis, contatenar nombre del juego obtenido si es gratis con la línea ya...
                 // ...existente en el nodo
-                strcat(juegosGratis, "\n");
+                //strcat(juegosGratis, "\n");
                 strcat(auxiliar->juegosGratis, juegosGratis);
                 
                 // actualizarNodo

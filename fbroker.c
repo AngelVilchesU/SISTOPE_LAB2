@@ -50,8 +50,8 @@ void recorrerLista(TDAlista *lista, int anioBase)
         {
             if (aux->anio >= anioBase) // Si el año del nodo es mayor/igual al año ingresado...
             {
-                printf("Año %d\nJuego mas caro: %s\nJuego mas barato: %s\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
-                        aux->anio, aux->nombreJuegoMasCaro, aux->nombreJuegoMasBarato, aux->promedioPrecioJuegos,
+                printf("Año %d\nJuego mas caro: %s %f\nJuego mas barato: %s %f\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
+                        aux->anio, aux->nombreJuegoMasCaro, aux->precioMasCaro, aux->nombreJuegoMasBarato, aux->precioMasBarato, aux->promedioPrecioJuegos,
                         aux->porcentajeW, aux->porcentajeMC, aux->porcentajeL, aux->juegosGratis);
             }
             aux = aux->siguiente; // Siguiente nodo
@@ -267,8 +267,8 @@ void imprimirEnFlujoDesdeAnio(TDAlista *lista_enlace, FILE *flujo, int anioBase)
     {
         if (aux->anio >= anioBase)
         {
-            fprintf(flujo, "Año %d\nJuego mas caro: %s\nJuego mas barato: %s\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
-                    aux->anio, aux->nombreJuegoMasCaro, aux->nombreJuegoMasBarato, aux->promedioPrecioJuegos,
+            fprintf(flujo, "Año %d\nJuego mas caro: %s %f\nJuego mas barato: %s %f\nPromedio de precios: %f\nWindows: %f%% Mac: %f%% Linux: %f%%\nJuegos gratis:\n%s",
+                    aux->anio, aux->nombreJuegoMasCaro, aux->precioMasCaro, aux->nombreJuegoMasBarato, aux->precioMasBarato, aux->promedioPrecioJuegos,
                     aux->porcentajeW, aux->porcentajeMC, aux->porcentajeL, aux->juegosGratis);
         }
         aux = aux->siguiente;

@@ -1,11 +1,5 @@
 all: lab2 worker broker 
 
-#fworker.o: fworker.c fworker.h
-#	gcc -c fworker.c  -lm
-
-#fbroker.o: fbroker.c fbroker.h
-#	gcc -c fbroker.c  -lm
-
 worker: worker.c
 	g++ worker.c fworker.c -o worker
 
