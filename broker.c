@@ -1,5 +1,5 @@
 #include "fbroker.h"
-
+//////////////////
 // Entradas: Parámetros entregados por el proceso lab2.c
 // Salidas: No considera
 // Descripción: Proceso principal del presente código que abarca desde el punto de lógica...
